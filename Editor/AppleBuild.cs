@@ -1,4 +1,4 @@
-#if (UNITY_EDITOR_OSX && (UNITY_IOS || UNITY_TVOS || UNITY_STANDALONE_OSX || UNITY_VISIONOS))
+#if UNITY_EDITOR_OSX
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
@@ -27,6 +27,12 @@ namespace Apple.Core
         [PostProcessBuild(10)]
         public static void OnPostProcessBuild(BuildTarget buildTarget, string generatedProjectPath)
         {
+             if (buildTarget != BuildTarget.iOS &&
+                buildTarget != BuildTarget.tvOS &&
+                buildTarget != BuildTarget.StandaloneOSX)
+                return;
+
+            
             // TODO: Add management for multiple build profiles.
             var appleBuildProfile = AppleBuildProfile.DefaultProfile();
 
